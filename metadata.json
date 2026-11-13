@@ -1,0 +1,6 @@
+{
+  "name": "Student Life Manager",
+  "description": "A comprehensive college student productivity platform for managing tasks, study sessions, timetables, assignments, notes, examinations, events, analytics, and AI study planning.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

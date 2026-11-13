@@ -1,0 +1,227 @@
+{
+  "entities": {
+    "UserProfile": {
+      "title": "UserProfile",
+      "description": "Student account profile, academic enrollment details, and UI/notification preferences.",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string", "minLength": 1, "maxLength": 128, "pattern": "^[a-zA-Z0-9_\\-]+$" },
+        "fullName": { "type": "string", "minLength": 1, "maxLength": 100 },
+        "email": { "type": "string", "minLength": 3, "maxLength": 150 },
+        "college": { "type": "string", "minLength": 0, "maxLength": 150 },
+        "degree": { "type": "string", "minLength": 0, "maxLength": 100 },
+        "branch": { "type": "string", "minLength": 0, "maxLength": 100 },
+        "semester": { "type": "string", "minLength": 0, "maxLength": 30 },
+        "academicYear": { "type": "string", "minLength": 0, "maxLength": 30 },
+        "profileImage": { "type": "string", "minLength": 0, "maxLength": 250000 },
+        "themePreference": { "type": "string", "enum": ["light", "dark", "system"] },
+        "notificationPrefs": { "type": "object" },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["userId", "fullName", "email", "college", "degree", "branch", "semester", "academicYear", "profileImage", "themePreference", "notificationPrefs", "createdAt", "updatedAt"]
+    },
+    "Subject": {
+      "title": "Subject",
+      "description": "Academic subject with daily/weekly study goals and syllabus topic tracking.",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string", "minLength": 1, "maxLength": 128, "pattern": "^[a-zA-Z0-9_\\-]+$" },
+        "name": { "type": "string", "minLength": 1, "maxLength": 100 },
+        "code": { "type": "string", "minLength": 0, "maxLength": 24 },
+        "color": { "type": "string", "minLength": 1, "maxLength": 30 },
+        "dailyTargetMinutes": { "type": "number" },
+        "weeklyTargetMinutes": { "type": "number" },
+        "totalTopics": { "type": "number" },
+        "completedTopics": { "type": "number" },
+        "completedTopicNames": { "type": "array" },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["userId", "name", "code", "color", "dailyTargetMinutes", "weeklyTargetMinutes", "totalTopics", "completedTopics", "completedTopicNames", "createdAt", "updatedAt"]
+    },
+    "Task": {
+      "title": "Task",
+      "description": "Student task with priority, category, due date, and completion state.",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string", "minLength": 1, "maxLength": 128, "pattern": "^[a-zA-Z0-9_\\-]+$" },
+        "title": { "type": "string", "minLength": 1, "maxLength": 160 },
+        "description": { "type": "string", "minLength": 0, "maxLength": 2000 },
+        "category": { "type": "string", "enum": ["Academic", "Personal", "Projects", "College Activities", "Other"] },
+        "priority": { "type": "string", "enum": ["Low", "Medium", "High"] },
+        "dueDate": { "type": "string", "minLength": 0, "maxLength": 20 },
+        "completed": { "type": "boolean" },
+        "subjectId": { "type": "string", "minLength": 0, "maxLength": 128 },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["userId", "title", "description", "category", "priority", "dueDate", "completed", "subjectId", "createdAt", "updatedAt"]
+    },
+    "Assignment": {
+      "title": "Assignment",
+      "description": "Course assignment with submission deadline, priority, and submission tracking.",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string", "minLength": 1, "maxLength": 128, "pattern": "^[a-zA-Z0-9_\\-]+$" },
+        "subjectId": { "type": "string", "minLength": 0, "maxLength": 128 },
+        "subjectName": { "type": "string", "minLength": 1, "maxLength": 100 },
+        "title": { "type": "string", "minLength": 1, "maxLength": 160 },
+        "description": { "type": "string", "minLength": 0, "maxLength": 2000 },
+        "deadline": { "type": "string", "minLength": 1, "maxLength": 40 },
+        "priority": { "type": "string", "enum": ["Low", "Medium", "High"] },
+        "status": { "type": "string", "enum": ["pending", "submitted"] },
+        "submittedAt": { "type": "string", "minLength": 0, "maxLength": 40 },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["userId", "subjectId", "subjectName", "title", "description", "deadline", "priority", "status", "submittedAt", "createdAt", "updatedAt"]
+    },
+    "TimetableEntry": {
+      "title": "TimetableEntry",
+      "description": "Weekly timetable slot for lectures or break periods from Monday to Saturday.",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string", "minLength": 1, "maxLength": 128, "pattern": "^[a-zA-Z0-9_\\-]+$" },
+        "day": { "type": "string", "enum": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"] },
+        "entryType": { "type": "string", "enum": ["lecture", "break"] },
+        "subjectName": { "type": "string", "minLength": 1, "maxLength": 100 },
+        "facultyName": { "type": "string", "minLength": 0, "maxLength": 100 },
+        "classroom": { "type": "string", "minLength": 0, "maxLength": 50 },
+        "startTime": { "type": "string", "minLength": 5, "maxLength": 5 },
+        "endTime": { "type": "string", "minLength": 5, "maxLength": 5 },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["userId", "day", "entryType", "subjectName", "facultyName", "classroom", "startTime", "endTime", "createdAt", "updatedAt"]
+    },
+    "StudySession": {
+      "title": "StudySession",
+      "description": "Logged study session tied to a subject, date, duration, and topic.",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string", "minLength": 1, "maxLength": 128, "pattern": "^[a-zA-Z0-9_\\-]+$" },
+        "subjectId": { "type": "string", "minLength": 1, "maxLength": 128 },
+        "subjectName": { "type": "string", "minLength": 1, "maxLength": 100 },
+        "topic": { "type": "string", "minLength": 1, "maxLength": 160 },
+        "date": { "type": "string", "minLength": 10, "maxLength": 10 },
+        "durationMinutes": { "type": "number" },
+        "notes": { "type": "string", "minLength": 0, "maxLength": 1000 },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["userId", "subjectId", "subjectName", "topic", "date", "durationMinutes", "notes", "createdAt", "updatedAt"]
+    },
+    "Note": {
+      "title": "Note",
+      "description": "Personal academic note with rich text content, subject association, pinning, and archiving.",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string", "minLength": 1, "maxLength": 128, "pattern": "^[a-zA-Z0-9_\\-]+$" },
+        "subjectId": { "type": "string", "minLength": 0, "maxLength": 128 },
+        "subjectName": { "type": "string", "minLength": 0, "maxLength": 100 },
+        "title": { "type": "string", "minLength": 1, "maxLength": 160 },
+        "content": { "type": "string", "minLength": 0, "maxLength": 100000 },
+        "pinned": { "type": "boolean" },
+        "archived": { "type": "boolean" },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["userId", "subjectId", "subjectName", "title", "content", "pinned", "archived", "createdAt", "updatedAt"]
+    },
+    "Examination": {
+      "title": "Examination",
+      "description": "Upcoming examination schedule, syllabus notes, and preparation status.",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string", "minLength": 1, "maxLength": 128, "pattern": "^[a-zA-Z0-9_\\-]+$" },
+        "subjectId": { "type": "string", "minLength": 0, "maxLength": 128 },
+        "subjectName": { "type": "string", "minLength": 1, "maxLength": 100 },
+        "examType": { "type": "string", "enum": ["Mid-Term", "Final", "Quiz", "Practical", "Viva", "Other"] },
+        "examDate": { "type": "string", "minLength": 10, "maxLength": 10 },
+        "examTime": { "type": "string", "minLength": 5, "maxLength": 5 },
+        "venue": { "type": "string", "minLength": 0, "maxLength": 100 },
+        "syllabus": { "type": "string", "minLength": 0, "maxLength": 5000 },
+        "prepStatus": { "type": "string", "enum": ["Not Started", "In Progress", "Revising", "Ready"] },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["userId", "subjectId", "subjectName", "examType", "examDate", "examTime", "venue", "syllabus", "prepStatus", "createdAt", "updatedAt"]
+    },
+    "CalendarEvent": {
+      "title": "CalendarEvent",
+      "description": "Personal or college event or reminder scheduled on the student calendar.",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string", "minLength": 1, "maxLength": 128, "pattern": "^[a-zA-Z0-9_\\-]+$" },
+        "title": { "type": "string", "minLength": 1, "maxLength": 160 },
+        "category": { "type": "string", "enum": ["College Event", "Personal", "Deadline", "Study Group", "Other"] },
+        "date": { "type": "string", "minLength": 10, "maxLength": 10 },
+        "time": { "type": "string", "minLength": 0, "maxLength": 10 },
+        "description": { "type": "string", "minLength": 0, "maxLength": 2000 },
+        "reminderEnabled": { "type": "boolean" },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["userId", "title", "category", "date", "time", "description", "reminderEnabled", "createdAt", "updatedAt"]
+    },
+    "NotificationItem": {
+      "title": "NotificationItem",
+      "description": "In-app notification alert synced to Firestore for deadlines, exams, and events.",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string", "minLength": 1, "maxLength": 128, "pattern": "^[a-zA-Z0-9_\\-]+$" },
+        "title": { "type": "string", "minLength": 1, "maxLength": 160 },
+        "message": { "type": "string", "minLength": 1, "maxLength": 500 },
+        "type": { "type": "string", "enum": ["assignment", "exam", "event", "study"] },
+        "read": { "type": "boolean" },
+        "sourceId": { "type": "string", "minLength": 0, "maxLength": 128 },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["userId", "title", "message", "type", "read", "sourceId", "createdAt", "updatedAt"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": { "$ref": "#/entities/UserProfile" },
+      "description": "Private student profile and preferences, strictly accessible only by the owner."
+    },
+    "/subjects/{subjectId}": {
+      "schema": { "$ref": "#/entities/Subject" },
+      "description": "Student-owned academic subjects with study targets and syllabus progress."
+    },
+    "/tasks/{taskId}": {
+      "schema": { "$ref": "#/entities/Task" },
+      "description": "Student-owned tasks across academic and personal categories."
+    },
+    "/assignments/{assignmentId}": {
+      "schema": { "$ref": "#/entities/Assignment" },
+      "description": "Student-owned course assignments and submission deadlines."
+    },
+    "/timetable/{entryId}": {
+      "schema": { "$ref": "#/entities/TimetableEntry" },
+      "description": "Weekly Monday-Saturday college lecture and break schedule entries."
+    },
+    "/study_sessions/{sessionId}": {
+      "schema": { "$ref": "#/entities/StudySession" },
+      "description": "Logged study sessions by subject, topic, and duration."
+    },
+    "/notes/{noteId}": {
+      "schema": { "$ref": "#/entities/Note" },
+      "description": "Personal academic notes with rich text, pinning, and archiving."
+    },
+    "/examinations/{examId}": {
+      "schema": { "$ref": "#/entities/Examination" },
+      "description": "Student examinations with syllabus and preparation status."
+    },
+    "/events/{eventId}": {
+      "schema": { "$ref": "#/entities/CalendarEvent" },
+      "description": "Personal and college calendar events and reminders."
+    },
+    "/notifications/{notificationId}": {
+      "schema": { "$ref": "#/entities/NotificationItem" },
+      "description": "Student notification inbox entries."
+    }
+  }
+}
